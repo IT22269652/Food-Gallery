@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a th:href="@{/}" class="logo">FoodGallery</a>
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." />
+      </div>
+      <div class="menu">
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/food-post}">Food Post</a>
+      </div>
+      <a th:href="@{/login}" class="login-btn">Login</a>
+    </nav>
+    <h1>Welcome to FoodGallery</h1>
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>FoodGallery</h3>
+          <p>
+            Discover and share delicious recipes with FoodGallery, your go-to
+            platform for culinary inspiration.
+          </p>
+          <div class="social-icons">
+            <a href="https://facebook.com" target="_blank">f</a>
+            <a href="https://twitter.com" target="_blank">t</a>
+            <a href="https://instagram.com" target="_blank">i</a>
+            <a href="https://linkedin.com" target="_blank">in</a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Company</h3>
+          <a th:href="@{/}">Home</a>
+          <a th:href="@{/about}">About Us</a>
+          <a th:href="@{/contact}">Contact Us</a>
+          <a th:href="@{/privacy}">Privacy Policy</a>
+        </div>
+        <div class="footer-section">
+          <h3>Get in Touch</h3>
+          <a href="tel:+1234567890">+1 234 567 890</a>
+          <a href="mailto:contact@foodgallery.com">contact@foodgallery.com</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Copyright 2025 © FoodGallery.dev. All Rights Reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

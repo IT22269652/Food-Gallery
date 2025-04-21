@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Food Post Results</title>
+    <style>
+      /* Navbar Styling */
+      .navbar {
+        position: fixed; /* Fix the navbar to the top */
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000; /* Ensure navbar stays above other content */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      .navbar .logo {
+        color: #fff;
+        font-size: 24px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .navbar .search-bar input {
+        padding: 5px;
+        border: none;
+        border-radius: 4px;
+        width: 200px;
+      }
+      .navbar .menu a {
+        color: #fff;
+        margin: 0 15px;
+        text-decoration: none;
+        font-size: 16px;
+      }
+      .navbar .menu a:hover {
+        color: #ddd;
+      }
+      .navbar .login-btn {
+        background-color: #f0ad4e;
+        color: #fff;
+        padding: 8px 15px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 16px;
+      }
+      .navbar .login-btn:hover {
+        background-color: #ec971f;
+      }
+
+      /* Result Styling */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding-top: 60px;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .post-container {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .post-container img {
+        max-width: 100%;
+        height: auto;
+        margin: 10px 0;
+        border-radius: 4px;
+      }
+      .post-container p {
+        margin: 10px 0;
+        color: #555;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .actions button {
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        flex: 1;
+      }
+      .actions .update-btn {
+        background-color: #28a745;
+        color: #fff;
+      }
+      .actions .update-btn:hover {
+        background-color: #218838;
+      }
+      .actions .delete-btn {
+        background-color: #dc3545;
+        color: #fff;
+      }
+      .actions .delete-btn:hover {
+        background-color: #c82333;
+      }
+      .no-posts {
+        text-align: center;
+        color: #555;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <a th:href="@{/}" class="logo">FoodGallery</a>
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." />
+      </div>
+      <div class="menu">
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/food-post}">Food Post</a>
+      </div>
+      <a th:href="@{/login}" class="login-btn">Login</a>
+    </nav>
+
+    <!-- Post Results -->
+    <h1>Food Post Results</h1>
+    <div th:if="${posts.isEmpty()}" class="no-posts">
+      <p>No posts available.</p>
+    </div>
+    <div th:each="post : ${posts}" class="post-container">
+      <p><strong>Title:</strong> <span th:text="${post.title}"></span></p>
+      <p>
+        <strong>Description:</strong>
+        <span th:text="${post.description}"></span>
+      </p>
+      <div th:each="image : ${post.imagePaths}">
+        <img th:src="@{'/images/' + ${image}}" alt="Food Image" />
+      </div>
+      <div class="actions">
+        <form th:action="@{/food-post/update/__${post.id}__}" method="get">
+          <button type="submit" class="update-btn">Update</button>
+        </form>
+        <form th:action="@{/food-post/delete/__${post.id}__}" method="post">
+          <button type="submit" class="delete-btn">Delete</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

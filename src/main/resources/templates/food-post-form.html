@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Create Food Post</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+      /* General styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #f5f5f5;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      main {
+        flex: 1;
+        padding-top: 80px; /* Adjusted to account for fixed navbar height */
+      }
+
+      /* Navbar styles */
+      .navbar {
+        position: fixed; /* Fix the navbar to the top */
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000; /* Ensure navbar stays above other content */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      .navbar .logo {
+        color: #fff;
+        font-size: 24px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .navbar .search-bar input {
+        padding: 5px;
+        border: none;
+        border-radius: 4px;
+        width: 200px;
+      }
+      .navbar .menu a {
+        color: #fff;
+        margin: 0 15px;
+        text-decoration: none;
+        font-size: 16px;
+      }
+      .navbar .menu a:hover {
+        color: #ddd;
+      }
+      .navbar .login-btn {
+        background-color: #f0ad4e;
+        color: #fff;
+        padding: 8px 15px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 16px;
+      }
+      .navbar .login-btn:hover {
+        background-color: #ec971f;
+      }
+
+      /* Form-specific styles */
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      label {
+        display: block;
+        margin: 10px 0 5px;
+        color: #555;
+      }
+      input[type="text"],
+      input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      input[type="file"] {
+        padding: 5px;
+      }
+      .error {
+        color: red;
+        font-size: 0.9em;
+        margin-bottom: 10px;
+      }
+      button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      .success {
+        color: green;
+        text-align: center;
+        margin: 10px 0;
+      }
+
+      /* Footer styles */
+      .footer {
+        background-color: #333;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+      .footer-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+      .footer-section {
+        margin: 10px;
+      }
+      .footer-section h3 {
+        margin-bottom: 10px;
+      }
+      .footer-section a {
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        margin: 5px 0;
+      }
+      .footer-section a:hover {
+        color: #ddd;
+      }
+      .footer-bottom {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a th:href="@{/}" class="logo">FoodGallery</a>
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." />
+      </div>
+      <div class="menu">
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/food-post}">Food Post</a>
+      </div>
+      <a th:href="@{/login}" class="login-btn">Login</a>
+    </nav>
+    <main>
+      <h1>Create New Food Post</h1>
+      <div
+        th:if="${successMessage}"
+        class="success"
+        th:text="${successMessage}"
+      ></div>
+      <form
+        th:action="@{/food-post}"
+        th:object="${foodPost}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div>
+          <label for="title">Title</label>
+          <input type="text" id="title" th:field="*{title}" required />
+          <div
+            th:if="${#fields.hasErrors('title')}"
+            th:errors="*{title}"
+            class="error"
+          ></div>
+        </div>
+        <div>
+          <label for="description">Description</label>
+          <input
+            type="text"
+            id="description"
+            th:field="*{description}"
+            required
+          />
+          <div
+            th:if="${#fields.hasErrors('description')}"
+            th:errors="*{description}"
+            class="error"
+          ></div>
+        </div>
+        <div>
+          <label for="images">Food Image (1–3 photos)</label>
+          <input
+            type="file"
+            id="images"
+            name="images"
+            accept="image/*"
+            multiple
+            required
+            onchange="limitImages(this, 3)"
+          />
+          <div
+            th:if="${#fields.hasErrors('images')}"
+            th:errors="*{images}"
+            class="error"
+          ></div>
+          <div id="image-error" class="error" style="display: none">
+            Please upload between 1 and 3 images.
+          </div>
+        </div>
+        <div>
+          <button type="submit">Create Post</button>
+        </div>
+      </form>
+    </main>
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>FoodGallery</h3>
+          <p>
+            Discover and share delicious recipes with FoodGallery, your go-to
+            platform for culinary inspiration.
+          </p>
+          <div class="social-icons">
+            <a href="https://facebook.com" target="_blank">f</a>
+            <a href="https://twitter.com" target="_blank">t</a>
+            <a href="https://instagram.com" target="_blank">i</a>
+            <a href="https://linkedin.com" target="_blank">in</a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Company</h3>
+          <a th:href="@{/}">Home</a>
+          <a th:href="@{/about}">About Us</a>
+          <a th:href="@{/contact}">Contact Us</a>
+          <a th:href="@{/privacy}">Privacy Policy</a>
+        </div>
+        <div class="footer-section">
+          <h3>Get in Touch</h3>
+          <a href="tel:+1234567890">+1 234 567 890</a>
+          <a href="mailto:contact@foodgallery.com">contact@foodgallery.com</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Copyright 2025 © FoodGallery.dev. All Rights Reserved.</p>
+      </div>
+    </footer>
+    <script>
+      function limitImages(input, max) {
+        const errorDiv = document.getElementById("image-error");
+        if (input.files.length < 1 || input.files.length > max) {
+          errorDiv.style.display = "block";
+          input.setCustomValidity("Please upload between 1 and 3 images.");
+        } else {
+          errorDiv.style.display = "none";
+          input.setCustomValidity("");
+        }
+      }
+    </script>
+  </body>
+</html>

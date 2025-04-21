@@ -1,0 +1,85 @@
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px 20px;
+  color: #fff;
+}
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+}
+.navbar a:hover {
+  color: #f0a500;
+}
+.navbar .search-bar input {
+  padding: 5px;
+  border-radius: 15px;
+  border: none;
+}
+.navbar .login-btn {
+  background-color: #f0a500;
+  padding: 5px 15px;
+  border-radius: 15px;
+}
+
+/* Footer Styling */
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+}
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.footer-section {
+  flex: 1;
+  margin: 10px;
+  min-width: 200px;
+}
+.footer-section h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+.footer-section p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.footer-section a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  margin: 8px 0;
+  font-size: 14px;
+}
+.footer-section a:hover {
+  color: #f0a500;
+}
+.footer-section .social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+.footer-section .social-icons a {
+  font-size: 20px;
+  color: #fff;
+}
+.footer-section .social-icons a:hover {
+  color: #f0a500;
+}
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #444;
+  font-size: 14px;
+}

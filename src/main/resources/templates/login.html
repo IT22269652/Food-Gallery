@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a th:href="@{/}" class="logo">FoodGallery</a>
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." />
+      </div>
+      <div class="menu">
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/food-post}">Food Post</a>
+      </div>
+      <a th:href="@{/login}" class="login-btn">Login</a>
+    </nav>
+  </body>
+</html>
