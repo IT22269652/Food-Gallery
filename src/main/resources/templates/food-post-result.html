@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>Food Post Results</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
     <style>
       /* Navbar Styling */
       .navbar {
@@ -111,6 +112,36 @@
         color: #555;
         margin: 20px;
       }
+      /* Footer styles */
+      .footer {
+        background-color: #333;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+      .footer-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+      .footer-section {
+        margin: 10px;
+      }
+      .footer-section h3 {
+        margin-bottom: 10px;
+      }
+      .footer-section a {
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        margin: 5px 0;
+      }
+      .footer-section a:hover {
+        color: #ddd;
+      }
+      .footer-bottom {
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
@@ -123,6 +154,8 @@
       <div class="menu">
         <a th:href="@{/}">Home</a>
         <a th:href="@{/food-post}">Food Post</a>
+        <a th:href="@{/food-recipy}">Food Recipy</a>
+        <a th:href="@{/food-decorations}">Food Decorations</a>
       </div>
       <a th:href="@{/login}" class="login-btn">Login</a>
     </nav>
@@ -150,5 +183,31 @@
         </form>
       </div>
     </div>
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>FoodGallery</h3>
+          <p>
+            Discover and share delicious recipes with FoodGallery, your go-to
+            platform for culinary inspiration.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Company</h3>
+          <a th:href="@{/}">Home</a>
+          <a th:href="@{/about}">About Us</a>
+          <a th:href="@{/contact}">Contact Us</a>
+          <a th:href="@{/privacy}">Privacy Policy</a>
+        </div>
+        <div class="footer-section">
+          <h3>Get in Touch</h3>
+          <a href="tel:+1234567890">+1 234 567 890</a>
+          <a href="mailto:contact@foodgallery.com">contact@foodgallery.com</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Copyright 2025 © FoodGallery.dev. All Rights Reserved.</p>
+      </div>
+    </footer>
   </body>
 </html>

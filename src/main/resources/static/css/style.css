@@ -1,29 +1,198 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  padding-top: 80px; /* Space for fixed navbar */
+  text-align: center;
+}
+
 /* Navbar Styling */
 .navbar {
+  position: fixed; /* Fix the navbar to the top */
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #333;
   padding: 10px 20px;
   color: #fff;
+  z-index: 1000; /* Ensure navbar stays above other content */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 .navbar a {
   color: #fff;
   text-decoration: none;
   margin: 0 15px;
 }
+
 .navbar a:hover {
   color: #f0a500;
 }
+
+.navbar .logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
 .navbar .search-bar input {
   padding: 5px;
   border-radius: 15px;
   border: none;
+  width: 200px;
 }
+
+.navbar .menu a {
+  font-size: 16px;
+}
+
 .navbar .login-btn {
   background-color: #f0a500;
-  padding: 5px 15px;
+  padding: 8px 15px;
   border-radius: 15px;
+  font-size: 16px;
+}
+
+.navbar .login-btn:hover {
+  background-color: #ec971f;
+}
+
+/* Main Content Styling */
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.success {
+  color: green;
+  text-align: center;
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin: 10px 0;
+  font-size: 0.9em;
+}
+
+/* Form Styling (for food-post-form.html) */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  color: #555;
+}
+
+input[type="text"],
+input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="file"] {
+  padding: 5px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Result Page Styling (for food-post-result.html) */
+.post-container {
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-container img {
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+.post-container p {
+  margin: 10px 0;
+  color: #555;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.actions button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  flex: 1;
+}
+
+.actions .update-btn {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.actions .update-btn:hover {
+  background-color: #218838;
+}
+
+.actions .delete-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.actions .delete-btn:hover {
+  background-color: #c82333;
+}
+
+.no-posts {
+  text-align: center;
+  color: #555;
+  margin: 20px;
 }
 
 /* Footer Styling */
@@ -33,6 +202,7 @@
   padding: 40px 20px;
   font-family: Arial, sans-serif;
 }
+
 .footer-container {
   display: flex;
   justify-content: space-between;
@@ -40,20 +210,24 @@
   margin: 0 auto;
   flex-wrap: wrap;
 }
+
 .footer-section {
   flex: 1;
   margin: 10px;
   min-width: 200px;
 }
+
 .footer-section h3 {
   font-size: 18px;
   margin-bottom: 15px;
   text-transform: uppercase;
 }
+
 .footer-section p {
   font-size: 14px;
   line-height: 1.5;
 }
+
 .footer-section a {
   color: #fff;
   text-decoration: none;
@@ -61,21 +235,26 @@
   margin: 8px 0;
   font-size: 14px;
 }
+
 .footer-section a:hover {
   color: #f0a500;
 }
+
 .footer-section .social-icons {
   display: flex;
   gap: 15px;
   margin-top: 10px;
 }
+
 .footer-section .social-icons a {
   font-size: 20px;
   color: #fff;
 }
+
 .footer-section .social-icons a:hover {
   color: #f0a500;
 }
+
 .footer-bottom {
   text-align: center;
   margin-top: 20px;

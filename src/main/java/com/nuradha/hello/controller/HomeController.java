@@ -1,5 +1,7 @@
 package com.nuradha.hello.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nuradha.hello.model.FoodPost;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +22,31 @@ import java.util.UUID;
 public class HomeController {
     private static final List<FoodPost> posts = new ArrayList<>();
     private static final String UPLOAD_DIR = "src/main/resources/static/images/";
+    private static final String DATA_FILE = "src/main/resources/data/food-posts.json";
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    // Load posts from file on startup
+    static {
+        try {
+            File file = new File(DATA_FILE);
+            if (file.exists()) {
+                posts.addAll(objectMapper.readValue(file, new TypeReference<List<FoodPost>>() {}));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Save posts to file
+    private void savePostsToFile() {
+        try {
+            File file = new File(DATA_FILE);
+            Files.createDirectories(file.getParentFile().toPath());
+            objectMapper.writeValue(file, posts);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @GetMapping("/")
     public String home() {
@@ -26,7 +54,8 @@ public class HomeController {
     }
 
     @GetMapping("/food-post")
-    public String foodPostForm(@ModelAttribute("foodPost") FoodPost foodPost) {
+    public String foodPostForm(Model model) {
+        model.addAttribute("foodPost", new FoodPost());
         return "food-post-form";
     }
 
@@ -43,16 +72,19 @@ public class HomeController {
         foodPost.setId((long) (posts.size() + 1));
         String[] imagePaths = new String[images.length];
         for (int i = 0; i < images.length; i++) {
-            String fileName = UUID.randomUUID() + "_" + images[i].getOriginalFilename();
-            Path filePath = Paths.get(UPLOAD_DIR, fileName);
-            Files.createDirectories(filePath.getParent());
-            Files.write(filePath, images[i].getBytes());
-            imagePaths[i] = fileName;
+            if (!images[i].isEmpty()) {
+                String fileName = UUID.randomUUID() + "_" + images[i].getOriginalFilename();
+                Path filePath = Paths.get(UPLOAD_DIR, fileName);
+                Files.createDirectories(filePath.getParent());
+                Files.write(filePath, images[i].getBytes());
+                imagePaths[i] = fileName;
+            }
         }
         foodPost.setImagePaths(imagePaths);
 
         // Save post
         posts.add(foodPost);
+        savePostsToFile();
 
         // Add success message
         redirectAttributes.addFlashAttribute("successMessage", "Post Created Successfully");
@@ -98,22 +130,27 @@ public class HomeController {
         if (images != null && images.length > 0 && images.length <= 3) {
             String[] imagePaths = new String[images.length];
             for (int i = 0; i < images.length; i++) {
-                String fileName = UUID.randomUUID() + "_" + images[i].getOriginalFilename();
-                Path filePath = Paths.get(UPLOAD_DIR, fileName);
-                Files.createDirectories(filePath.getParent());
-                Files.write(filePath, images[i].getBytes());
-                imagePaths[i] = fileName;
+                if (!images[i].isEmpty()) {
+                    String fileName = UUID.randomUUID() + "_" + images[i].getOriginalFilename();
+                    Path filePath = Paths.get(UPLOAD_DIR, fileName);
+                    Files.createDirectories(filePath.getParent());
+                    Files.write(filePath, images[i].getBytes());
+                    imagePaths[i] = fileName;
+                }
             }
             post.setImagePaths(imagePaths);
         }
 
+        savePostsToFile();
         redirectAttributes.addFlashAttribute("successMessage", "Post Updated Successfully");
-        return "redirect:/food-result";
+        return "redirect:/"; // Redirect to home page
     }
 
     @PostMapping("/food-post/delete/{id}")
-    public String deletePost(@PathVariable("id") Long id) {
+    public String deletePost(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         posts.removeIf(p -> p.getId().equals(id));
+        savePostsToFile();
+        redirectAttributes.addFlashAttribute("successMessage", "Post Deleted Successfully");
         return "redirect:/food-result";
     }
 
